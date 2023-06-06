@@ -93,7 +93,7 @@ class ReportApplicationTests {
 	}
 
 	@Test
-	public void canGetAllPatients() throws Exception {
+	public void canGetAllReport() throws Exception {
 		Reports report1 = new Reports(1, 1, "same", "assss");
 		Reports report2 = new Reports(1, 1, "same", "assss");
 

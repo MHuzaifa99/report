@@ -36,6 +36,11 @@ public class ReportController {
         return ResponseEntity.ok().body(repo.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getReport(@PathVariable long id){
+        return ResponseEntity.ok().body(repo.findById(id));
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deletereport(@PathVariable long id){
         repo.deleteById(id);
