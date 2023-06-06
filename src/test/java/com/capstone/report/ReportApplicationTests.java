@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -108,6 +109,21 @@ class ReportApplicationTests {
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.content().json(jsonReports.write(reportList).getJson()));
+	}
+
+	@Test 
+	public void canGetReportById() throws Exception{
+		Reports report1 = new Reports( 1, 1, "same", "assss");
+		List<Reports> reportList = new ArrayList<>();
+		reportList.add(report1);
+		when(reportRepo.findById(1L)).thenReturn(Optional.of(report1));
+
+
+		mvc.perform(MockMvcRequestBuilders
+				.get("/report/1")
+				.contentType(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().json(jsonReport.write(report1).getJson()));
 	}
 
 }
