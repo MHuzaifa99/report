@@ -43,7 +43,6 @@ class ReportApplicationTests {
 	private JacksonTester<Reports> jsonReport;
 	private JacksonTester<List<Reports>> jsonReports;
 
-	
 	@BeforeEach
 	public void setUp() {
 		JacksonTester.initFields(this, new ObjectMapper());
@@ -59,41 +58,45 @@ class ReportApplicationTests {
 		Reports report = new Reports(1, 1, "same", "assss");
 
 		when(reportRepo.save(report)).thenReturn(report);
-		
+
 		mvc.perform(MockMvcRequestBuilders
-		.post("/report/add")
-		.contentType(MediaType.APPLICATION_JSON)
-		.content(jsonReport.write(report).getJson()))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+				.post("/report/add")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jsonReport
+						.write(report)
+						.getJson()))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 	@Test
-	public void canUpdateAReport() throws Exception{
+	public void canUpdateAReport() throws Exception {
 
 		Reports report1 = new Reports(1, 2, "gill", "true");
 		when(reportRepo.save(report1)).thenReturn(report1);
 
-		mvc.perform(MockMvcRequestBuilders.post("/report/update")
-			.contentType(MediaType.APPLICATION_JSON)
-			.content(jsonReport.write(report1).getJson()))
-			.andExpect(MockMvcResultMatchers.status().isOk());
-			
+		mvc.perform(MockMvcRequestBuilders
+				.post("/report/update")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(jsonReport.write(report1)
+				.getJson()))
+				.andExpect(MockMvcResultMatchers.status().isOk());
+
 	}
 
 	@Test
 	public void canDeleteReport() throws Exception {
-		
+
 		long id = 1;
 		doNothing().when(reportRepo).deleteById(id);
 		mvc.perform(MockMvcRequestBuilders.delete("/report/delete/1"))
-			.andExpect(MockMvcResultMatchers.status().isOk());
+				.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 	@Test
 	public void canGetAllPatients() throws Exception {
 		Reports report1 = new Reports(1, 1, "same", "assss");
 		Reports report2 = new Reports(1, 1, "same", "assss");
-		
+
 		List<Reports> reportList = new ArrayList<>();
 		reportList.add(report1);
 		reportList.add(report2);
