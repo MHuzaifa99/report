@@ -1,6 +1,7 @@
 package com.capstone.report.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.capstone.report.entity.Reports;
 import com.capstone.report.repository.ReportRepo;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/report")
 public class ReportController {
