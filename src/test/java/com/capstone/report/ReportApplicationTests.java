@@ -23,6 +23,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.capstone.report.controller.ReportController;
 import com.capstone.report.entity.Reports;
+import com.capstone.report.entity.Response;
 import com.capstone.report.repository.ReportRepo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,17 +41,13 @@ class ReportApplicationTests {
 	@InjectMocks
 	private ReportController reportController;
 
-	private JacksonTester<Reports> jsonReport;
-	private JacksonTester<List<Reports>> jsonReports;
+	private JacksonTester<Response> jsonReport;
+	private JacksonTester<Response> jsonReports;
 
 	@BeforeEach
 	public void setUp() {
 		JacksonTester.initFields(this, new ObjectMapper());
 		mvc = MockMvcBuilders.standaloneSetup(reportController).build();
-	}
-
-	@Test
-	void contextLoads() {
 	}
 
 	@Test
@@ -63,7 +60,7 @@ class ReportApplicationTests {
 				.post("/report/add")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(jsonReport
-						.write(report)
+						.write(new Response(true, report, "Report added successfully"))
 						.getJson()))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 	}
@@ -77,7 +74,7 @@ class ReportApplicationTests {
 		mvc.perform(MockMvcRequestBuilders
 				.post("/report/update")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(jsonReport.write(report1)
+				.content(jsonReport.write(new Response(true, report1, "Report updated successfully"))
 				.getJson()))
 				.andExpect(MockMvcResultMatchers.status().isOk());
 
@@ -107,7 +104,7 @@ class ReportApplicationTests {
 				.get("/report/list")
 				.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(MockMvcResultMatchers.status().isOk())
-				.andExpect(MockMvcResultMatchers.content().json(jsonReports.write(reportList).getJson()));
+				.andExpect(MockMvcResultMatchers.content().json(jsonReports.write(new Response(true, reportList, "Reports fetched successfully")).getJson()));
 	}
 
 }

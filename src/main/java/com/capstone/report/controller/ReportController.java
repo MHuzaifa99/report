@@ -1,5 +1,7 @@
 package com.capstone.report.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capstone.report.entity.Reports;
+import com.capstone.report.entity.Response;
 import com.capstone.report.repository.ReportRepo;
 
 @CrossOrigin("*")
@@ -24,28 +27,32 @@ public class ReportController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity reportAdd(@RequestBody Reports report){
-        return ResponseEntity.ok().body(repo.save(report));
+    public ResponseEntity<Response> reportAdd(@RequestBody Reports report){
+        Reports reportAdded = repo.save(report);
+        return ResponseEntity.ok().body(new Response(true, reportAdded, "Report added successfully"));
     }
 
     @PostMapping("/update")
-    public ResponseEntity reportUpdate(@RequestBody Reports report){
-        return ResponseEntity.ok().body(repo.save(report));
+    public ResponseEntity<Response> reportUpdate(@RequestBody Reports report){
+        Reports updatedReport = repo.save(report);
+        return ResponseEntity.ok().body(new Response(true, updatedReport, "Report updated successfully"));
     }
 
     @GetMapping("/list")
-    public ResponseEntity getReports(){
-        return ResponseEntity.ok().body(repo.findAll());
+    public ResponseEntity<Response> getReports(){
+        List<Reports> allreports = repo.findAll();
+        return ResponseEntity.ok().body(new Response(true, allreports, "Reports fetched successfully"));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getReport(@PathVariable long id){
-        return ResponseEntity.ok().body(repo.findById(id));
+    public ResponseEntity<Response> getReport(@PathVariable long id){
+        Reports report = repo.findById(id).orElse(null);
+        return ResponseEntity.ok().body(new Response(true, report, "Reports fetched successfully"));
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity deletereport(@PathVariable long id){
+    public ResponseEntity<Response> deletereport(@PathVariable long id){
         repo.deleteById(id);
-        return ResponseEntity.ok().body("Report deleted");
+        return ResponseEntity.ok().body(new Response(true, "Report deleted"));
     }
 }
