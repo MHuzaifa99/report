@@ -30,8 +30,8 @@ public class Reports {
     @UpdateTimestamp
     private LocalDateTime updated;
 
-    public Reports(long id, long patientId,String category, String sfl){//,LocalDateTime created,LocalDateTime updated){
-        this.id = id;
+    public Reports( long patientId,String category, String sfl){//,LocalDateTime created,LocalDateTime updated){
+        // this.id = id;
         this.patientId = patientId;
         this.category = category;
         this.surveyFormLink = sfl;
