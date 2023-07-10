@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.capstone.report.entity.Reports;
 import com.capstone.report.entity.Response;
@@ -54,5 +55,11 @@ public class ReportController {
     public ResponseEntity<Response> deletereport(@PathVariable long id){
         repo.deleteById(id);
         return ResponseEntity.ok().body(new Response(true, "Report deleted"));
+    }
+
+    @GetMapping("/patientId/{patientId}")
+    public ResponseEntity<Response> getByPateintId(@PathVariable long patientId){
+        // Reports report = repo.getByPatientId(patientId);
+        return ResponseEntity.ok().body(new Response(true, repo.getByPatientId(patientId), "Report fetched successfully"));
     }
 }

@@ -22,19 +22,19 @@ public class Reports {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private long patient_id;
+    private long patientId;
     private String category;
-    private String survey_form_link;
+    private String surveyFormLink;
     @CreationTimestamp
     private LocalDateTime created;
     @UpdateTimestamp
     private LocalDateTime updated;
 
-    public Reports(long id, long patient_id,String category, String sfl){//,LocalDateTime created,LocalDateTime updated){
+    public Reports(long id, long patientId,String category, String sfl){//,LocalDateTime created,LocalDateTime updated){
         this.id = id;
-        this.patient_id = patient_id;
+        this.patientId = patientId;
         this.category = category;
-        this.survey_form_link = sfl;
+        this.surveyFormLink = sfl;
         // this.created = created;
         // this.updated = updated;
     }
