@@ -62,4 +62,16 @@ public class ReportController {
         // Reports report = repo.getByPatientId(patientId);
         return ResponseEntity.ok().body(new Response(true, repo.getByPatientId(patientId), "Report fetched successfully"));
     }
+
+    @GetMapping("/")
+    public ResponseEntity getReportsForDataEngg(){
+        List<Reports> allreports = repo.findAll();
+        return ResponseEntity.ok().body(allreports);
+    }
+
+    @GetMapping("/get/{id}")
+    public ResponseEntity getReportForDataEngg(@PathVariable long id){
+        Reports report = repo.findById(id).orElse(null);
+        return ResponseEntity.ok().body(report);
+    }
 }
